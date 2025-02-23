@@ -3,8 +3,7 @@
     "name": "rate_calculator",
     "slug": "rate_calculator",
     "version": "1.0.0",
-
-    "scheme": "rate_calculator",
+    "scheme": "rate-calculator",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -21,29 +20,38 @@
     ],
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "automatic",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rate-calculator"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.rate_calculator"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a4853fbf-04c6-45c2-80cf-44113d6b96a8"
       }
-    }
+    },
+    "owner": "shashankraj007281"
   }
 }

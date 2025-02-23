@@ -67,7 +67,7 @@ function SettingsIcon() {
       <Pressable className="opacity-80">
         {({ pressed }) => (
           <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon name="cog-outline" color={colors.foreground} />
+            <Icon namingScheme='ion' name="cog-outline" color={colors.foreground} />
           </View>
         )}
       </Pressable>
