@@ -52,6 +52,12 @@
         "projectId": "a4853fbf-04c6-45c2-80cf-44113d6b96a8"
       }
     },
-    "owner": "shashankraj007281"
+    "owner": "shashankraj007281",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a4853fbf-04c6-45c2-80cf-44113d6b96a8"
+    }
   }
 }
