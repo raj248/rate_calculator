@@ -72,7 +72,7 @@ function ListEmptyComponent() {
 
   return (
     <View style={{ height }} className="flex-1 items-center justify-center gap-1 px-12">
-      <Icon name="file-plus-outline" size={42} color={colors.grey} />
+      <Icon name="file-plus-outline" color={colors.grey} namingScheme={'ion'} />
       <Text variant="title3" className="pb-1 text-center font-semibold">
         No Components Installed
       </Text>

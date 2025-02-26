@@ -17,15 +17,15 @@ export function ThemeToggle() {
         <Pressable onPress={toggleColorScheme} className="opacity-80">
           {colorScheme === 'dark'
             ? ({ pressed }) => (
-                <View className={cn('px-0.5', pressed && 'opacity-50')}>
-                  <Icon namingScheme="sfSymbol" name="moon.stars" color={COLORS.white} />
-                </View>
-              )
+              <View className={cn('px-0.5', pressed && 'opacity-50')}>
+                <Icon namingScheme="sfSymbol" name="moon.stars" color={COLORS.white} size={30} />
+              </View>
+            )
             : ({ pressed }) => (
-                <View className={cn('px-0.5', pressed && 'opacity-50')}>
-                  <Icon namingScheme="sfSymbol" name="sun.min" color={COLORS.black} />
-                </View>
-              )}
+              <View className={cn('px-0.5', pressed && 'opacity-50')}>
+                <Icon namingScheme="sfSymbol" name="sun.min" color={COLORS.black} size={30} />
+              </View>
+            )}
         </Pressable>
       </Animated.View>
     </LayoutAnimationConfig>

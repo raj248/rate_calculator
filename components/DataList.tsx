@@ -1,7 +1,6 @@
-import { View} from 'react-native'
+import { View } from 'react-native'
 import { Text } from '~/components/nativewindui/Text';
 import { TouchableOpacity, FlatList, useColorScheme } from "react-native";
-import { FC } from "react";
 
 type MonthData = {
   date: string;
@@ -13,9 +12,9 @@ const generateMonths = (startYear: number, endYear: number): MonthData[] => {
   for (let year = startYear; year <= endYear; year++) {
     for (let month = 1; month <= 12; month++) {
       const formattedMonth = month.toString().padStart(2, "0"); // Ensures MM format
-      months.push({ 
-        date: `${formattedMonth}-${year}`, 
-        amount: Math.floor(Math.random() * 5000) + 5000 
+      months.push({
+        date: `${formattedMonth}-${year}`,
+        amount: Math.floor(Math.random() * 5000) + 5000
       });
     }
   }
@@ -28,8 +27,11 @@ const monthNames: string[] = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-
-export default function DataList(){
+interface DataListProps {
+  openSheet?: (() => void) | null; // Function to open sheet from parent
+  setDate: (fn: React.SetStateAction<string>) => void;
+}
+export default function DataList({ openSheet, setDate }: DataListProps) {
   const colorScheme = useColorScheme();
 
   const renderItem = ({ item }: { item: MonthData }) => {
@@ -38,12 +40,15 @@ export default function DataList(){
 
     return (
       <TouchableOpacity
-        className={`rounded-md p-4 mb-2 border ${
-          colorScheme === "dark"
-            ? "bg-gray-900 border-gray-700 active:bg-gray-800"
-            : "bg-white border-gray-400 active:bg-gray-200"
-        }`}
-        onPress={() => console.log(`Selected: ${monthName} ${year} - $${item.amount}`)}
+        className={`rounded-md p-4 mb-2 border ${colorScheme === "dark"
+          ? "bg-gray-900 border-gray-700 active:bg-gray-800"
+          : "bg-white border-gray-400 active:bg-gray-200"
+          }`}
+        onPress={() => {
+          setDate(item.date);
+          { console.log(item.date) }
+          openSheet?.();
+        }}
       >
         <Text className={`text-center font-bold ${colorScheme === "dark" ? "text-white" : "text-black"}`}>
           {monthName} {year} : ${item.amount}
