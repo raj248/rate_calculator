@@ -18,52 +18,53 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
   const recordedDays = Object.keys(monthData).sort((a, b) => parseInt(a) - parseInt(b));
 
   return (
-    <View className="p-4">
+    <View className="p-2">
       {/* Table Header */}
-      <View className="flex-row border-b border-gray-400 pb-2 mb-2">
-        <Text className="w-16 font-bold text-center">Date</Text>
-        <Text className="w-20 font-bold text-center">Day</Text>
-        <Text className="w-16 font-bold text-center">Amt1</Text>
-        <Text className="w-16 font-bold text-center">Amt2</Text>
-        <Text className="w-20 font-bold text-center">Total</Text>
+      <View className="flex-row border-b border-gray-400 pb-1 mb-1">
+        <Text className="w-14 text-xs font-bold text-center">Date</Text>
+        <Text className="w-18 text-xs font-bold text-center">Day</Text>
+        <Text className="w-14 text-xs font-bold text-center">A1</Text>
+        <Text className="w-14 text-xs font-bold text-center">A2</Text>
+        <Text className="flex-1 text-xs font-bold text-center">Total</Text>
       </View>
 
       {/* Table Rows */}
       {recordedDays.map((day, index) => {
         const [amt1, amt2] = monthData[day] || [0, 0];
         const formattedDate = day.padStart(2, '0'); // Ensure two-digit format ('01', '02', etc.)
-        const dayName = format(new Date(parsedDate.getFullYear(), parsedDate.getMonth(), parseInt(day)), 'EEEE');
+        const dayName = format(new Date(parsedDate.getFullYear(), parsedDate.getMonth(), parseInt(day)), 'EEE'); // Short day name
 
         if (amt1 === 0 && amt2 === 0) {
           // Render "Holiday" row
           return (
             <View key={index} className="flex-row border-b border-gray-200 py-1">
-              <Text className="w-16 text-center">{formattedDate}</Text>
-              <Text className="w-20 text-center">{dayName}</Text>
-              <Text className="flex-1 text-center text-red-500 font-bold">Holiday</Text>
+              <Text className="w-14 text-xs text-center">{formattedDate}</Text>
+              <Text className="w-18 text-xs text-center">{dayName}</Text>
+              <Text className="flex-1 text-xs text-center text-red-500 font-bold">Holiday</Text>
             </View>
           );
         }
 
-        const total = amt1 * 2.5 + amt2 * 2;
+        const dayTotal = amt1 * 2.5 + amt2 * 2;
 
         return (
           <View key={index} className="flex-row border-b border-gray-200 py-1">
-            <Text className="w-16 text-center">{formattedDate}</Text>
-            <Text className="w-20 text-center">{dayName}</Text>
-            <Text className="w-16 text-center">{amt1}</Text>
-            <Text className="w-16 text-center">{amt2}</Text>
-            <Text className="w-20 text-center">{total}</Text>
+            <Text className="w-14 text-xs text-center">{formattedDate}</Text>
+            <Text className="w-18 text-xs text-center">{dayName}</Text>
+            <Text className="w-14 text-xs text-center">{amt1}</Text>
+            <Text className="w-14 text-xs text-center">{amt2}</Text>
+            <Text className="flex-1 text-xs text-center">{dayTotal}</Text>
           </View>
         );
       })}
+
       {/* Summary Row for Total */}
-      <View className="flex-row border-b-2 border-gray-500 mt-2 pt-2">
-        <Text className="w-16"></Text>
-        <Text className="w-20 font-bold text-center">Total</Text>
-        <Text className="w-16"></Text>
-        <Text className="w-16"></Text>
-        <Text className="w-20 font-bold text-green-600 text-center">{total}</Text>
+      <View className="flex-row border-t-2 border-gray-500 mt-2 pt-2">
+        <Text className="w-14"></Text>
+        <Text className="w-18 text-xs font-bold text-center">Total</Text>
+        <Text className="w-14"></Text>
+        <Text className="w-14"></Text>
+        <Text className="flex-1 text-xs font-bold text-green-600 text-center">{total}</Text>
       </View>
     </View>
   );
