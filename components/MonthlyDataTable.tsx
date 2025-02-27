@@ -23,8 +23,8 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
       <View className="flex-row border-b border-gray-400 pb-1 mb-1">
         <Text className="w-14 text-xs font-bold text-center">Date</Text>
         <Text className="w-18 text-xs font-bold text-center">Day</Text>
-        <Text className="w-14 text-xs font-bold text-center">A1</Text>
-        <Text className="w-14 text-xs font-bold text-center">A2</Text>
+        <Text className="w-14 text-xs font-bold text-center">₹ 2.5</Text>
+        <Text className="w-14 text-xs font-bold text-center">₹ 2</Text>
         <Text className="flex-1 text-xs font-bold text-center">Total</Text>
       </View>
 
@@ -59,7 +59,7 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
       })}
 
       {/* Summary Row for Total */}
-      <View className="flex-row border-t-2 border-gray-500 mt-2 pt-2">
+      <View className="flex-row border-b-2 border-gray-500 mt-2 pt-2">
         <Text className="w-14"></Text>
         <Text className="w-18 text-xs font-bold text-center">Total</Text>
         <Text className="w-14"></Text>
