@@ -42,7 +42,6 @@ export default function RootLayout() {
                 <Stack.Screen name="modal" options={MODAL_OPTIONS} />
               </Stack>
               <Toast />
-
             </NavThemeProvider>
           </BottomSheetModalProvider>
         </PaperProvider>

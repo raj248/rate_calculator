@@ -33,8 +33,8 @@ export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps
           </View>
 
           {/* Amount Inputs */}
-          <TextInput label="Amount 1" keyboardType="numeric" value={amt1} onChangeText={setAmt1} mode="outlined" />
-          <TextInput label="Amount 2" keyboardType="numeric" value={amt2} onChangeText={setAmt2} mode="outlined" className="mt-2" />
+          <TextInput label="₹ 2.5" keyboardType="numeric" value={amt1} onChangeText={setAmt1} mode="outlined" />
+          <TextInput label="₹ 2" keyboardType="numeric" value={amt2} onChangeText={setAmt2} mode="outlined" className="mt-2" />
         </Dialog.Content>
 
         <Dialog.Actions>

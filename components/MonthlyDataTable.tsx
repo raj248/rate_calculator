@@ -12,6 +12,7 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
   const parsedDate = parse(date, 'MM-yyyy', new Date());
   const monthKey = format(parsedDate, 'MM-yyyy');
   const monthData = useRateStore((state) => state.getMonthData(monthKey)) || {};
+  const total = useRateStore((state) => state.totals[monthKey]) || 0;
 
   // Extract only the days present in the data
   const recordedDays = Object.keys(monthData).sort((a, b) => parseInt(a) - parseInt(b));
@@ -56,6 +57,14 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
           </View>
         );
       })}
+      {/* Summary Row for Total */}
+      <View className="flex-row border-b-2 border-gray-500 mt-2 pt-2">
+        <Text className="w-16"></Text>
+        <Text className="w-20 font-bold text-center">Total</Text>
+        <Text className="w-16"></Text>
+        <Text className="w-16"></Text>
+        <Text className="w-20 font-bold text-green-600 text-center">{total}</Text>
+      </View>
     </View>
   );
 }
