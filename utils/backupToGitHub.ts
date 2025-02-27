@@ -1,5 +1,6 @@
 import { useRateStore } from '~/store/rateStore';
 import { useGitHubStore } from '~/store/githubStore';
+import Toast from 'react-native-toast-message';
 
 const GIST_FILENAME = 'rate-data.json';
 
@@ -9,6 +10,7 @@ const backupToGitHub = async () => {
 
   if (!token) {
     console.error('GitHub token is missing!');
+    Toast.show({ type: 'error', position: 'top', text1: 'GitHub Error', text2: 'Token is missing!' });
     return;
   }
 
@@ -52,9 +54,11 @@ const backupToGitHub = async () => {
     }
 
     console.log('Backup successful:', result.html_url);
+    Toast.show({ type: 'success', position: 'top', text1: 'Backup successful', text2: 'Data uploaded to GitHub!' });
     return result.html_url;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Backup failed:', error);
+    Toast.show({ type: 'error', position: 'top', text1: 'Backup Failed', text2: error.message });
   }
 };
 

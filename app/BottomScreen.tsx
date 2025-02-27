@@ -4,8 +4,7 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import MonthlyDataTable from '~/components/MonthlyDataTable';
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton } from '~/components/IconButton';
-import AddEntryPopup from '~/components/AddEntryPopup';
-import EditEntryPopup from '~/components/EditEntryPopup';
+import AddEntryPopup from '~/components/UpsertEntryPopup';
 
 interface BottomSheetProps {
   date?: string;
@@ -14,8 +13,7 @@ interface BottomSheetProps {
 
 export default function BottomSheet({ date, setOpenSheet }: BottomSheetProps) {
   const bottomSheetModalRef = useSheetRef();
-  const [showAddPopup, setShowAddPopup] = useState(false);
-  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showUpsertPopup, setShowUpsertPopup] = useState(false);
 
 
   useEffect(() => {
@@ -35,35 +33,16 @@ export default function BottomSheet({ date, setOpenSheet }: BottomSheetProps) {
             onPress={() => bottomSheetModalRef.current?.close()}
             className="mt-3 p-2 bg-red-500 rounded-lg mx-auto"
           />
-          <IconButton name={'edit'} color={'white'}
-            onPress={() => setShowEditPopup(true)}
-            className="mt-3 p-2 bg-blue-500 rounded-lg mx-auto"
-          />
+
           <IconButton name={'plus'} color={'white'}
-            onPress={() => setShowAddPopup(true)}
+            onPress={() => setShowUpsertPopup(true)}
             className="mt-3 p-2 bg-green-500 rounded-lg mx-auto"
           />
         </View>
+
         <AddEntryPopup
-          visible={showAddPopup}
-          onDismiss={() => setShowAddPopup(false)}
-          onSave={(data: any) => {
-            console.log('Saving Data:', data);
-            setShowAddPopup(false);
-          }}
-        />
-        <EditEntryPopup
-          visible={showEditPopup}
-          onDismiss={() => setShowEditPopup(false)}
-          onSave={(data: any) => {
-            console.log('Saving Data:', data);
-            setShowEditPopup(false);
-          }}
-          initialData={{
-            date: '00-9999',
-            amt1: '0',
-            amt2: '0'
-          }}
+          visible={showUpsertPopup}
+          onDismiss={() => setShowUpsertPopup(false)}
         />
 
         <View className="flex-1 p-4">

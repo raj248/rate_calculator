@@ -1,61 +1,64 @@
-import { View } from 'react-native'
+import { View } from 'react-native';
 import { Text } from '~/components/nativewindui/Text';
-import { TouchableOpacity, FlatList, useColorScheme } from "react-native";
-
-type MonthData = {
-  date: string;
-  amount: number;
-};
-
-const generateMonths = (startYear: number, endYear: number): MonthData[] => {
-  const months: MonthData[] = [];
-  for (let year = startYear; year <= endYear; year++) {
-    for (let month = 1; month <= 12; month++) {
-      const formattedMonth = month.toString().padStart(2, "0"); // Ensures MM format
-      months.push({
-        date: `${formattedMonth}-${year}`,
-        amount: Math.floor(Math.random() * 5000) + 5000
-      });
-    }
-  }
-  return months;
-};
-
-const months: MonthData[] = generateMonths(2021, 2024);
+import { TouchableOpacity, FlatList, useColorScheme } from 'react-native';
+import { useRateStore } from '~/store/rateStore';
+import { useState } from 'react';
+import loadFromGitHub from '~/utils/loadFromGitHub';
 
 const monthNames: string[] = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
 interface DataListProps {
-  openSheet?: (() => void) | null; // Function to open sheet from parent
+  openSheet?: (() => void) | null;
   setDate: (fn: React.SetStateAction<string>) => void;
 }
+
 export default function DataList({ openSheet, setDate }: DataListProps) {
   const colorScheme = useColorScheme();
+  const { data, totals } = useRateStore();
+  const [refreshing, setRefreshing] = useState(false);
 
-  const renderItem = ({ item }: { item: MonthData }) => {
-    const [month, year] = item.date.split("-");
-    const monthName = monthNames[parseInt(month) - 1];
+  // Convert store data into a usable array format
+  const months = Object.keys(data)
+    .map((key) => {
+      const [month, year] = key.split("-");
+      return {
+        date: key,
+        monthName: monthNames[parseInt(month) - 1],
+        year,
+        amount: totals[key] || 0,
+      };
+    })
+    .sort((a, b) => {
+      const [monthA, yearA] = a.date.split("-").map(Number);
+      const [monthB, yearB] = b.date.split("-").map(Number);
+      return yearB - yearA || monthB - monthA;
+    });
 
-    return (
-      <TouchableOpacity
-        className={`rounded-md p-4 mb-2 border ${colorScheme === "dark"
-          ? "bg-gray-900 border-gray-700 active:bg-gray-800"
-          : "bg-white border-gray-400 active:bg-gray-200"
-          }`}
-        onPress={() => {
-          setDate(item.date);
-          { console.log(item.date) }
-          openSheet?.();
-        }}
-      >
-        <Text className={`text-center font-bold ${colorScheme === "dark" ? "text-white" : "text-black"}`}>
-          {monthName} {year} : ${item.amount}
-        </Text>
-      </TouchableOpacity>
-    );
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await loadFromGitHub();
+    setRefreshing(false);
   };
+
+  const renderItem = ({ item }: { item: { date: string; monthName: string; year: string; amount: number } }) => (
+    <TouchableOpacity
+      className={`rounded-md p-4 mb-2 border ${colorScheme === "dark"
+        ? "bg-gray-900 border-gray-700 active:bg-gray-800"
+        : "bg-white border-gray-400 active:bg-gray-200"
+        }`}
+      onPress={() => {
+        setDate(item.date);
+        openSheet?.();
+      }}
+    >
+      <Text className={`text-center font-bold ${colorScheme === "dark" ? "text-white" : "text-black"}`}>
+        {item.monthName} {item.year} : ₹{item.amount}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View className="flex-1 p-4">
@@ -63,8 +66,10 @@ export default function DataList({ openSheet, setDate }: DataListProps) {
         data={months}
         keyExtractor={(item) => item.date}
         renderItem={renderItem}
-        showsVerticalScrollIndicator={false} // Hides scroll bar for a cleaner UI
+        showsVerticalScrollIndicator={false}
+        refreshing={refreshing}
+        onRefresh={handleRefresh} // Pull-to-refresh functionality
       />
     </View>
   );
-};
+}

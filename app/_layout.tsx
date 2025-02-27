@@ -13,6 +13,7 @@ import { cn } from '~/lib/cn';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { PaperProvider } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -40,6 +41,8 @@ export default function RootLayout() {
                 <Stack.Screen name="index" options={INDEX_OPTIONS} />
                 <Stack.Screen name="modal" options={MODAL_OPTIONS} />
               </Stack>
+              <Toast />
+
             </NavThemeProvider>
           </BottomSheetModalProvider>
         </PaperProvider>
@@ -56,7 +59,7 @@ const SCREEN_OPTIONS = {
 
 const INDEX_OPTIONS = {
   headerLargeTitle: true,
-  title: 'NativeWindUI',
+  title: 'Work Tracker',
   headerRight: () => <SettingsIcon />,
 } as const;
 
@@ -67,7 +70,7 @@ function SettingsIcon() {
       <Pressable className="opacity-80">
         {({ pressed }) => (
           <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon namingScheme='ion' name="cog-outline" color={colors.foreground} />
+            <Icon namingScheme='ion' name="cog-outline" color={colors.foreground} size={30} />
           </View>
         )}
       </Pressable>
