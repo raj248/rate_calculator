@@ -4,6 +4,7 @@ import { Linking, Platform, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 
 import { Text } from '~/components/nativewindui/Text';
+import SettingsScreen from '~/components/Settings';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useGitHubStore } from '~/store/githubStore';
 import backupToGitHub from '~/utils/backupToGitHub';
@@ -35,6 +36,8 @@ export default function ModalScreen() {
         <Button mode="outlined" onPress={loadFromGitHub} className="mt-2 w-full">
           Load Backup from Gist
         </Button>
+
+        <SettingsScreen />
       </View>
     </>
   );
