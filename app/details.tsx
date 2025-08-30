@@ -21,7 +21,7 @@ const Details = () => {
   const [showUpsertPopup, setShowUpsertPopup] = useState(false);
 
   return (
-    <SafeAreaView className='flex-1'>
+    <View className='flex-1'>
       <Stack.Screen
         options={{
           headerLargeTitle: true,
@@ -50,7 +50,7 @@ const Details = () => {
 
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
