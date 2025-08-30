@@ -21,12 +21,12 @@ const Details = () => {
   const [showUpsertPopup, setShowUpsertPopup] = useState(false);
 
   return (
-    <View className='flex-1'>
+    <SafeAreaView className='flex-1' edges={["bottom"]}>
       <Stack.Screen
         options={{
           headerLargeTitle: true,
           title: formatDateTitle(date as string),
-          headerRight: () => <IconButton name={'plus'} color={'red'} onPress={() => setShowUpsertPopup(true)} />,
+          headerRight: () => <IconButton label='Add Entry' name={'plus'} color={'white'} onPress={() => setShowUpsertPopup(true)} />,
         }}
       />
       <AddEntryPopup
@@ -50,7 +50,7 @@ const Details = () => {
 
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
