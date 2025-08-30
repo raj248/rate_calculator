@@ -12,11 +12,10 @@ const monthNames: string[] = [
 ];
 
 interface DataListProps {
-  openSheet?: (() => void) | null;
-  setDate: (fn: React.SetStateAction<string>) => void;
+  // setDate: (fn: React.SetStateAction<string>) => void;
 }
 
-export default function DataList({ openSheet, setDate }: DataListProps) {
+export default function DataList({ }: DataListProps) {
   const colorScheme = useColorScheme();
   const { data, totals } = useRateStore();
   const [refreshing, setRefreshing] = useState(false);
@@ -51,8 +50,6 @@ export default function DataList({ openSheet, setDate }: DataListProps) {
         : "bg-white border-gray-400 active:bg-gray-200"
         }`}
       onPress={() => {
-        setDate(item.date);
-        // openSheet?.();
         // router.push(`/details?date=${item.date}`);
         router.push({
           pathname: "/details",

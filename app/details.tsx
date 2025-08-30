@@ -5,6 +5,7 @@ import { IconButton } from '~/components/IconButton'
 import AddEntryPopup from '~/components/UpsertEntryPopup'
 import MonthlyDataTable from '~/components/MonthlyDataTable'
 import { Stack, useLocalSearchParams } from 'expo-router'
+import MonthlyStats from '~/components/MonthlyStats'
 
 const formatDateTitle = (dateStr: string) => {
   const [month, year] = dateStr.split("-");
@@ -39,7 +40,10 @@ const Details = () => {
       >
         <View className="flex-1 p-1">
           {date ? (
-            <MonthlyDataTable date={date as string} />
+            <>
+              <MonthlyStats date={date as string} />
+              <MonthlyDataTable date={date as string} />
+            </>
           ) : (
             <Text className="text-center">No content provided</Text>
           )}

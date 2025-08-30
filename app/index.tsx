@@ -14,7 +14,7 @@ export default function Screen() {
 
   return (
     <View className="flex-1">
-      <DataList openSheet={openSheet} setDate={setDate} />
+      <DataList />
 
       <TouchableOpacity
         onPress={() => setShowUpsertPopup(true)} className="absolute right-6 bg-blue-600 w-14 h-14 rounded-full items-center justify-center shadow-lg"
