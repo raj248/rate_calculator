@@ -1,6 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import BottomSheet from './BottomScreen';
 import DataList from '~/app/DataList';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-paper';
@@ -16,7 +15,6 @@ export default function Screen() {
   return (
     <View className="flex-1">
       <DataList openSheet={openSheet} setDate={setDate} />
-      <BottomSheet setOpenSheet={setOpenSheet} date={date} />
 
       <TouchableOpacity
         onPress={() => setShowUpsertPopup(true)} className="absolute right-6 bg-blue-600 w-14 h-14 rounded-full items-center justify-center shadow-lg"
