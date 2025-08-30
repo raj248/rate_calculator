@@ -39,6 +39,7 @@ export default function RootLayout() {
             <NavThemeProvider value={NAV_THEME[colorScheme]}>
               <Stack screenOptions={SCREEN_OPTIONS}>
                 <Stack.Screen name="index" options={INDEX_OPTIONS} />
+                <Stack.Screen name="details" options={DETAILS_OPTIONS} />
                 <Stack.Screen name="modal" options={MODAL_OPTIONS} />
               </Stack>
               <Toast />
@@ -57,6 +58,12 @@ const SCREEN_OPTIONS = {
 } as const;
 
 const INDEX_OPTIONS = {
+  headerLargeTitle: true,
+  title: 'Work Tracker',
+  headerRight: () => <SettingsIcon />,
+} as const;
+
+const DETAILS_OPTIONS = {
   headerLargeTitle: true,
   title: 'Work Tracker',
   headerRight: () => <SettingsIcon />,

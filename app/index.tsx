@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import BottomSheet from './BottomScreen';
-import DataList from '~/components/DataList';
+import DataList from '~/app/DataList';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-paper';
 import AddEntryPopup from '~/components/UpsertEntryPopup';

@@ -4,6 +4,7 @@ import { TouchableOpacity, FlatList, useColorScheme } from 'react-native';
 import { useRateStore } from '~/store/rateStore';
 import { useState } from 'react';
 import loadFromGitHub from '~/utils/loadFromGitHub';
+import { router } from 'expo-router';
 
 const monthNames: string[] = [
   "January", "February", "March", "April", "May", "June",
@@ -51,7 +52,14 @@ export default function DataList({ openSheet, setDate }: DataListProps) {
         }`}
       onPress={() => {
         setDate(item.date);
-        openSheet?.();
+        // openSheet?.();
+        // router.push(`/details?date=${item.date}`);
+        router.push({
+          pathname: "/details",
+          params: {
+            date: item.date
+          }
+        })
       }}
     >
       <Text className={`text-center font-bold ${colorScheme === "dark" ? "text-white" : "text-black"}`}>
