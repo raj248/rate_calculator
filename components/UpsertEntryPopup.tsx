@@ -11,10 +11,28 @@ interface AddEntryPopupProps {
 
 export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps) {
   const [date, setDate] = useState(new Date());
-  const [amt1, setAmt1] = useState('');
+  const [amt1, setAmt1] = useState(''); // raw string input
   const [amt2, setAmt2] = useState('');
 
   const addEntry = useRateStore((state) => state.upsertEntry);
+
+  // ✅ Helper: safely evaluate expressions like "25+32+18"
+  const parseExpression = (input: string): number => {
+    if (!input.trim()) return 0;
+    return input
+      .split('+')
+      .map((n) => Number(n.trim()) || 0)
+      .reduce((a, b) => a + b, 0);
+  };
+
+  const amt1Value = parseExpression(amt1);
+  const amt2Value = parseExpression(amt2);
+
+  const handleSave = () => {
+    const formattedDate = date.toLocaleDateString('en-GB').split('/').join('-'); // DD-MM-YYYY
+    addEntry(formattedDate, amt1Value, amt2Value);
+    onDismiss();
+  };
 
   // Reset fields whenever popup opens
   useEffect(() => {
@@ -25,14 +43,8 @@ export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps
     }
   }, [visible]);
 
-  const handleSave = () => {
-    const formattedDate = date.toLocaleDateString('en-GB').split('/').join('-'); // DD-MM-YYYY
-    addEntry(formattedDate, Number(amt1) || 0, Number(amt2) || 0);
-    onDismiss();
-  };
-
-  // Compute total live
-  const total = (Number(amt1) || 0) * 2.5 + (Number(amt2) || 0) * 2;
+  // ✅ Compute total live
+  const total = amt1Value * 2.5 + amt2Value * 2;
 
   return (
     <Portal>
@@ -54,7 +66,7 @@ export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps
           {/* Amount Inputs */}
           <TextInput
             label="Qty at ₹2.5"
-            keyboardType="numeric"
+            keyboardType="default" // allow "+" typing
             value={amt1}
             onChangeText={setAmt1}
             mode="outlined"
@@ -62,7 +74,7 @@ export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps
           />
           <TextInput
             label="Qty at ₹2"
-            keyboardType="numeric"
+            keyboardType="default"
             value={amt2}
             onChangeText={setAmt2}
             mode="outlined"
@@ -73,12 +85,15 @@ export default function AddEntryPopup({ visible, onDismiss }: AddEntryPopupProps
             <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
               Total: ₹ {total.toFixed(2)}
             </Text>
+            <Text variant="bodySmall" style={{ color: 'gray' }}>
+              ({amt1Value} × 2.5 + {amt2Value} × 2)
+            </Text>
           </View>
         </Dialog.Content>
 
         <Dialog.Actions>
-          <Button className='mr-8' onPress={onDismiss}>Cancel</Button>
-          <Button className='px-3' onPress={handleSave} mode="contained">Save</Button>
+          <Button className="mr-8" onPress={onDismiss}>Cancel</Button>
+          <Button className="px-3" onPress={handleSave} mode="contained">Save</Button>
         </Dialog.Actions>
       </Dialog>
     </Portal>
