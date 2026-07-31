@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import backupToGitHub from '~/utils/backupToGitHub';
+import { isAfter, parse, startOfMonth } from 'date-fns';
 
 interface RateStore {
   data: Record<string, Record<string, [number, number]>>; // {'mm-yyyy': {'dd': [amt1, amt2]}}
@@ -27,11 +28,12 @@ export const useRateStore = create(
               [day]: [amt1, amt2], // Updates if exists, inserts if new
             },
           };
-
           // Compute total asynchronously
           setTimeout(() => {
+            const parsedDate = parse(date, 'dd-MM-yyyy', new Date());
+            const rate1 = isAfter(startOfMonth(parsedDate), new Date(2026, 4, 31)) ? 2.75 : 2.5;
             const monthTotal = Object.values(newData[key] || {}).reduce(
-              (sum, [a1, a2]) => sum + a1 * 2.5 + a2 * 2,
+              (sum, [a1, a2]) => sum + a1 * rate1 + a2 * 2,
               0
             );
             set((state) => ({

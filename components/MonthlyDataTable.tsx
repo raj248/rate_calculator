@@ -17,7 +17,6 @@ export default function MonthlyDataTable({ date }: MonthlyDataTableProps) {
   const textSize = useSettingsStore((state) => state.textSize);
 
   // Determine rate: 2.75 from June 2026 onward, 2.5 before
-  const june2026 = new Date(2026, 5, 1); // June 1, 2026
   const rate1 = isAfter(startOfMonth(parsedDate), new Date(2026, 4, 31)) ? 2.75 : 2.5;
   const rate1Label = rate1 === 2.75 ? '₹ 2.75' : '₹ 2.5';
 
